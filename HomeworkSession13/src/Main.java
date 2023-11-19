@@ -1,4 +1,3 @@
-import java.rmi.UnexpectedException;
 import java.util.*;
 
 public class Main {
@@ -46,24 +45,32 @@ public class Main {
         List<String> reversedList = new ArrayList<>(reverseList(originalList));
         System.out.println("Original list is " + originalList + " and the reversed list is " + reversedList + "\n");
 
-
         // 5. Write a generic method called printItems that takes a list of any type and prints each item.
         //    Use an upper bound to ensure that the list elements implement the CharSequence interface.
+        printItems(originalList);
+        System.out.println();
+
 
         // 6. Write a method called displayFirstTwo that takes a list of any type and displays the first two elements.
-        // Use a wildcard in the method parameter.
+        //    Use a wildcard in the method parameter.
+        System.out.println("First two items from integerList are");
+        displayFirstTwo(integerList);
+        System.out.println();
+
 
         // 7. Create a generic class called Box that stores an item of any type. Implement methods to put an
         //    item into the box and retrieve it.
+        Box<String> boxTwo = new Box<>();
+        boxTwo.setItem("String element");
+        System.out.println("Item in boxTwo is " + boxTwo.getItem());
     }
 
     //-------------------------------- 4
 
     static <T> List<T> reverseList(List<T> originalList) {
         Iterator<T> iterator = originalList.listIterator();
-        int size = originalList.size() - 1;
-        List<T> reversedList = new ArrayList<>(size);
-        for (int i = size; i >= 0; i--) {
+        List<T> reversedList = new ArrayList<>(originalList);
+        for (int i = reversedList.size() - 1; i >= 0; i--) {
             if (iterator.hasNext()) {
                 T next = iterator.next();
                 reversedList.set(i, next);
@@ -116,7 +123,6 @@ public class Main {
     static <T extends Number> Pair<Integer> calculateSums(List<T> numbers) {
         int evenSum = 0;
         int oddSum = 0;
-
         for (T number : numbers) {
             int value = number.intValue();
             if (value % 2 == 0) {
@@ -137,7 +143,9 @@ class Pair<T> {
         this.second = second;
     }
 
-    public Pair(Pair<T> integerPair) {
+    public Pair(Pair<T> pair) {
+        this.first = pair.first;
+        this.second = pair.second;
     }
 
     public T getFirst() {
@@ -166,11 +174,13 @@ class Box<T> {
         this.item = item;
     }
 
+    public Box() {}
+
     public T getItem() {
         return item;
     }
 
-    public void setOItem(T object) {
+    public void setItem(T object) {
         this.item = object;
     }
 
