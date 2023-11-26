@@ -1,6 +1,5 @@
 import company.*;
-import products.Category;
-import products.Product;
+import products.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
